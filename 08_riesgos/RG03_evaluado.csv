@@ -1,0 +1,13 @@
+﻿id,categoria,riesgo,procesos,origen,P,I,Valor,nivel,justificacion
+R-01,Presupuestal,"Que se reduzca el presupuesto de respaldo por priorizar gasto operativo, retrasando recuperación crítica.","BIA01,BIA03,BIA04,BIA06",Política y BIA,4,4,16,Crítico,BIA no aprobado y pruebas nunca realizadas.
+R-02,Patrocinio,"Que la gerencia no apruebe BIA y plan por falta de instancia de decisión, manteniendo objetivos no validados.",Todos,Universo auditable,3,5,15,Crítico,BIA sin revisión ni aprobación.
+R-03,Personal clave,"Que el respaldo dependa de una sola jefatura de TI, impidiendo restauración ante su indisponibilidad.",BIA01-BIA06,Política 4,4,4,16,Crítico,No se informó suplencia.
+R-04,Capacidad de ejecución,"Que TI no ejecute pruebas trimestrales ni actualice BIA por carga operativa, dejando controles sin evidencia.",Todos,Política 3.4 y 3.8,4,4,16,Crítico,No hay pruebas ni BIA actualizado.
+R-05,Resistencia al cambio,"Que las áreas no validen RTO y RPO, conservando objetivos incompatibles con operación.",BIA01-BIA06,Respuesta BIA,3,4,12,Alto,RTO y RPO propuestos por practicante.
+R-06,Proveedor,"Que el proveedor de nube no demuestre cifrado y restauración, causando dependencia sin garantías.",BIA01-BIA06,Política 3.6,3,5,15,Crítico,Cifrado solo declarado por proveedor.
+R-07,Técnico,"Que el enlace y respaldos no tengan redundancia efectiva, impidiendo recuperar durante una interrupción.","BIA02,BIA03,BIA04",Universo RG-03 a RG-05,4,5,20,Crítico,Enlace sin redundancia y falla de respaldo abierta.
+R-08,Normativo,"Que discos de respaldo no cifrados expongan datos personales, generando incumplimiento.","BIA01,BIA02,BIA04,BIA06",Política 3.6,4,5,20,Crítico,Disco externo no cifrado.
+R-09,De alcance,"Que el plan solo cubra copias y no continuidad, restauración y responsables, dejando escenarios críticos sin tratamiento.",Todos,Respuesta TI,4,4,16,Crítico,No existe plan de continuidad.
+R-10,Ejecución del plan,"Que no se asigne responsable, presupuesto y seguimiento, dejando acciones sin ejecutar.",Todos,Universo auditable,4,5,20,Crítico,Tratamientos sin plan ni auditoría sistemática.
+R-11,Presupuestal,"Que el costo de copia externa segura y pruebas exceda la disponibilidad, obligando controles parciales.",BIA01-BIA06,Política y capacidad,3,4,12,Alto,Recursos no calculados formalmente.
+R-12,Capacidad de ejecución,"Que incoherencias del BIA no se corrijan, diseñando recuperación que incumpla RTO/RPO.",BIA01-BIA06,bia.csv,4,4,16,Crítico,RPO/RTO inconsistentes y pruebas ausentes.

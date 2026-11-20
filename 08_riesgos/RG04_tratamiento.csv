@@ -1,0 +1,13 @@
+﻿id,Valor,Decisión,Acciones concretas de tratamiento,Responsable,Plazo,Costo,P residual,I residual,Valor residual,Señal temprana,Umbral de alerta,Aceptación residual
+R-01,16,Mitigar,Aprobar presupuesto por fases y copia externa cifrada.,Jefatura de TI,90 días,Medio,2,4,8,Acción sin avance,30 días sin evidencia,Gerencia General
+R-02,15,Mitigar,Instalar comité y aprobar BIA por acta.,Gerencia General,90 días,Medio,2,4,8,Acción sin avance,30 días sin evidencia,Gerencia General
+R-03,16,Mitigar,Documentar procedimiento y designar suplente.,Jefatura de TI,90 días,Medio,2,4,8,Acción sin avance,30 días sin evidencia,Gerencia General
+R-04,16,Mitigar,Programar prueba trimestral con evidencia.,Jefatura de TI,90 días,Medio,2,4,8,Acción sin avance,30 días sin evidencia,Gerencia General
+R-05,12,Mitigar,Validar RTO/RPO con dueños de proceso.,Jefatura de TI,90 días,Medio,2,4,6,Acción sin avance,30 días sin evidencia,Gerencia General
+R-06,15,Mitigar,"Exigir SLA, cifrado y prueba de restauración.",Jefatura de TI,90 días,Medio,2,4,8,Acción sin avance,30 días sin evidencia,Gerencia General
+R-07,20,Mitigar,Implementar redundancia y probar recuperación externa.,Jefatura de TI,90 días,Medio,2,4,8,Acción sin avance,30 días sin evidencia,Gerencia General
+R-08,20,Mitigar,Cifrar discos y restringir acceso.,Jefatura de TI,90 días,Medio,2,4,8,Acción sin avance,30 días sin evidencia,Gerencia General
+R-09,16,Mitigar,Definir alcance y escenarios de continuidad.,Jefatura de TI,90 días,Medio,2,4,8,Acción sin avance,30 días sin evidencia,Gerencia General
+R-10,20,Mitigar,Nombrar responsable y tablero trimestral.,Gerencia General,90 días,Medio,2,4,8,Acción sin avance,30 días sin evidencia,Gerencia General
+R-11,12,Mitigar,Fasear inversión y escenario mínimo viable.,Jefatura de TI,90 días,Medio,2,4,6,Acción sin avance,30 días sin evidencia,Gerencia General
+R-12,16,Mitigar,Corregir BIA y obtener firmas.,Jefatura de TI,90 días,Medio,2,4,8,Acción sin avance,30 días sin evidencia,Gerencia General

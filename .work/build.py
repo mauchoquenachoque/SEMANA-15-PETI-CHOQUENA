@@ -1,7 +1,6 @@
 from pathlib import Path
 import csv, shutil
-import pandas as pd
-import matplotlib.pyplot as plt
+import struct, zlib
 from docx import Document
 from docx.shared import Pt, RGBColor
 from docx.enum.table import WD_TABLE_ALIGNMENT
@@ -34,8 +33,20 @@ wc('RG04_tratamiento.csv',['id','Valor','Decisión','Acciones concretas de trata
 C=[[x[0],f'Estado y residual de {x[0]}','Gerencia General y comité','Mensual','Sesión y acta',x[4],'Tablero','Priorizar, escalar o aceptar'] for x in T]
 wc('RG06_comunicacion.csv',['id','Qué se comunica','A quién','Frecuencia','Canal','Quién comunica','Formato','Decisión'],C)
 (out/'RG01_contexto.md').write_text('# Contexto y criterios\n\nFecha de acuerdo: 18 de noviembre de 2026, anterior a la evaluación del 19 de noviembre. Alcance: riesgos de ejecución del plan de respaldo, recuperación y continuidad (12 meses).\n\nProbabilidad: 1 rara, 2 improbable, 3 posible, 4 probable (evidencia vigente), 5 casi cierta (control ausente). Impacto: 1 menor, 2 bajo, 3 moderado, 4 alto (interrupción crítica), 5 crítico (pérdida prolongada, datos expuestos o sanción). Valor=P x I. <=6 aceptable documentado; 7-14 tratamiento; >=15 decisión de Gerencia General.\n\nRevisión trimestral y ante caída de enlace, fallo de restauración, incidente de datos, cambio de proveedor o desviación presupuestal >10%.\n',encoding='utf-8')
-df=pd.DataFrame(R,columns=['id','categoria','riesgo','procesos','origen','P','I','Valor','nivel','justificacion']);df.to_csv(out/'RG03_evaluado.csv',index=False,encoding='utf-8-sig')
-plt.figure(figsize=(7,5));plt.scatter(df.P,df.I,s=df.Valor*35,c=df.Valor,cmap='YlOrRd',edgecolors='black');[plt.annotate(x.id,(x.P+.04,x.I+.04),fontsize=8) for _,x in df.iterrows()];plt.xticks(range(1,6));plt.yticks(range(1,6));plt.grid(alpha=.3);plt.xlabel('Probabilidad');plt.ylabel('Impacto');plt.title('Mapa de calor de riesgos');plt.tight_layout();(out/'graficos').mkdir(exist_ok=True);plt.savefig(out/'graficos'/'RG_mapa_calor.png',dpi=180);plt.close()
+wc('RG03_evaluado.csv',['id','categoria','riesgo','procesos','origen','P','I','Valor','nivel','justificacion'],R)
+# PNG autónomo de la matriz 5x5, sin bibliotecas externas.
+W=750; H=650; pix=bytearray([255,255,255,255])*(W*H)
+def rect(x,y,w,h,c):
+ for yy in range(max(0,y),min(H,y+h)):
+  for xx in range(max(0,x),min(W,x+w)):
+   i=(yy*W+xx)*4;pix[i:i+4]=bytes((*c,255))
+for iy in range(5):
+ for ix in range(5):
+  v=(ix+1)*(5-iy); rect(100+ix*100,60+iy*100,98,98,(80+min(175,v*8),220-min(180,v*8),80-min(70,v*3)))
+for r in R: rect(100+(r[5]-1)*100+42,60+(5-r[6])*100+42,16,16,(0,0,0))
+raw=b''.join(b'\x00'+bytes(pix[y*W*4:(y+1)*W*4]) for y in range(H))
+def chunk(k,d):return struct.pack('>I',len(d))+k+d+struct.pack('>I',zlib.crc32(k+d)&0xffffffff)
+(out/'graficos').mkdir(exist_ok=True);(out/'graficos'/'RG_mapa_calor.png').write_bytes(b'\x89PNG\r\n\x1a\n'+chunk(b'IHDR',struct.pack('>IIBBBBB',W,H,8,6,0,0,0))+chunk(b'IDAT',zlib.compress(raw,9))+chunk(b'IEND',b''))
 initial=sum(x[1] for x in T);final=sum(x[9] for x in T);(ev/'RG05_residual.txt').write_text(f'Valor inicial: {initial}\nValor residual: {final}\nReducción: {initial-final} puntos ({(initial-final)/initial:.0%})\nRiesgos sobre el criterio: '+', '.join(x[0] for x in T if x[9]>6)+'\nRiesgos sin señal temprana: 0\n',encoding='utf-8')
 (out/'RG05_residual.py').write_text("import pandas as pd\nt=pd.read_csv('RG04_tratamiento.csv');t['reduccion']=t.Valor-t['Valor residual'];print(t[['id','Valor','Valor residual','reduccion']].to_string(index=False))\n",encoding='utf-8')
 (out/'seccion_8_gestion_riesgos.md').write_text('## 8. Gestión de riesgos del plan\n\n### 8.1 Alcance y criterios\nSe gestiona la ejecución del plan de respaldo, recuperación y continuidad. Los criterios están en RG01_contexto.md.\n\n### 8.2 Método\nISO 31000:2018: contexto, identificación, análisis P x I, tratamiento, comunicación y revisión.\n\n### 8.3 Registro y evaluación\nRG02 registra 12 riesgos en las nueve categorías. RG03 y el mapa de calor muestran ocho críticos, tres altos y uno medio.\n\n### 8.5 Tratamiento y residual\nRG04 define responsable, acción, plazo, señal y umbral. El valor baja de 188 a 90 puntos.\n\n### 8.7 Comunicación y revisión\nRG06 define qué, a quién, cuándo, canal y decisión. La revisión es trimestral y ante disparadores.\n\n### 8.8 Aceptación\nLos residuales >6 requieren aceptación formal de Gerencia General.\n',encoding='utf-8')

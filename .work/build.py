@@ -56,7 +56,7 @@ for tb in d.tables:tb._element.getparent().remove(tb._element)
 def h(s,l=1):d.add_heading(s,l)
 def p(s):d.add_paragraph(s)
 def table(headers,rows):
- tb=d.add_table(rows=1,cols=len(headers));tb.style='Table Grid';tb.alignment=WD_TABLE_ALIGNMENT.CENTER
+ tb=d.add_table(rows=1,cols=len(headers));tb.alignment=WD_TABLE_ALIGNMENT.CENTER
  for i,x in enumerate(headers):tb.rows[0].cells[i].text=str(x);tb.rows[0].cells[i].paragraphs[0].runs[0].bold=True
  for row in rows:
   cc=tb.add_row().cells
